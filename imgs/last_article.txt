@@ -1,0 +1,169 @@
+<div class=""rich_media_wrp" id="img-content">
+<h1><span style=""background-color:#ffffff; color:#666666; font-family:&quot;PingFang SC&quot;,&quot;Microsoft Yahei&quot;,&quot;Helvetica Neue&quot;,Helvetica,STHeiTi,sans-serif; font-size:15px">Sweetviz is an open source Python pack that generates beautiful high-precision visualizations to start EDA (Exploratory Data Analysis) in just three lines of code. Output an HTML.</span></h1>
+
+<div class=""article-tag__list" id="js_tags">
+<div class=""article-tags">&nbsp;</div>
+</div>
+
+<div class=""rich_media_content" id="js_content" style=""visibility:visible">
+<p>&nbsp;</p>
+
+<p style=""text-align:center"><img alt="Image" class=""rich_pages wxw-img" src="https://src.codeschat.com/imgs/a878ce1a-2a41-4d73-9dc8-563eb8b29306.png" style=""height:auto !important; visibility:visible !important; width:650px !important" /></p>
+
+<p style=""text-align:center">&nbsp;</p>
+
+<p>As shown above, it can not only analyze data vertically according to different columns such as gender and age, but also do horizontal comparisons such as plural, maximum and minimum values for each column.</p>
+
+<p>All the input values and text information are automatically detected, and data analysis, visualization and comparison are performed, and finally it automatically helps you to summarize, which is a good helper for exploratory data analysis.</p>
+
+<h2><span style=""font-size:18px"><em><strong>1.install</strong></em></span></h2>
+
+<pre style=""margin-left:0px; margin-right:0px">
+<code><span style=""font-size:10px">pip <span style=""background-color:rgba(0, 0, 0, 0)">install</span>&nbsp;sweetviz</span></code></pre>
+
+<p>&nbsp;</p>
+
+<h2><span style=""font-size:18px"><em><strong>2.sweetviz Basic Usage</strong></em></span></h2>
+
+<p style=""text-align:start">The principle used by sweetviz is to generate a data report object (where my_dataframe is a DataFrame in pandas, a tabular data structure) using one line of code.</p>
+
+<pre style=""margin-left:0px; margin-right:0px">
+<code><span style=""font-size:10px"><span style=""background-color:rgba(0, 0, 0, 0)">import</span>&nbsp;pandas <span style=""background-color:rgba(0, 0, 0, 0)">as</span>&nbsp;pd
+<span style=""background-color:rgba(0, 0, 0, 0)">import</span>&nbsp;sweetviz <span style=""background-color:rgba(0, 0, 0, 0)">as</span>&nbsp;sv
+
+<em># Read data</em>
+my_dataframe = pd.read_csv(<span style=""background-color:rgba(0, 0, 0, 0)">&#39;../ImpartData/iris.csv&#39;</span>)
+<em># Analyzing Data</em>
+my_report = sv.analyze(my_dataframe)
+<em># Generate reports</em>
+my_report.show_html()</span></code></pre>
+
+<p>&nbsp;</p>
+
+<p style=""text-align:start">When the execution is complete, an HTML report file will be generated in the current folder</p>
+
+<p style=""text-align:center"><img alt="Image" class=""rich_pages wxw-img" src="https://src.codeschat.com/imgs/3d745807-eb68-4a37-af21-4761e6f0ff05.png" style=""height:auto !important; visibility:visible !important; width:256px !important" /></p>
+
+<p style=""text-align:center">&nbsp;</p>
+
+<p style=""text-align:start">Double click on this html and you will see the beautiful analysis report at</p>
+
+<p style=""text-align:center"><img alt="Image" class=""rich_pages wxw-img" src="https://src.codeschat.com/imgs/861b381d-b601-4518-af86-1926dc081be7.png" style=""height:auto !important; visibility:visible !important; width:677px !important" /></p>
+
+<p style=""text-align:center">&nbsp;</p>
+
+<p>There are three functions that can be used to analyze the data, in addition to the analyze function mentioned above, there are also compare and compare_intra functions.</p>
+
+<p>First, the analyze function.</p>
+
+<pre style=""margin-left:0px; margin-right:0px">
+<code><span style=""font-size:10px">analyze(source: Union[pd.DataFrame, Tuple[pd.DataFrame, str]],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target_feat: str = <span style=""background-color:rgba(0, 0, 0, 0)">None</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;feat_cfg: FeatureConfig = <span style=""background-color:rgba(0, 0, 0, 0)">None</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pairwise_analysis: str = <span style=""background-color:rgba(0, 0, 0, 0)">&#39;auto&#39;</span>)</span></code></pre>
+
+<p>&nbsp;</p>
+
+<p style=""text-align:start">It can be seen that it has the following four parameters that can be configured.</p>
+
+<ul>
+	<li>
+	<p><strong>source：</strong>The DataFrame data structure in pandas is used as the analysis object.</p>
+	</li>
+	<li>
+	<p><strong>target_feat：</strong>The string that needs to be marked as the target object.</p>
+	</li>
+	<li>
+	<p><strong>feat_cfg：</strong>Features that need to be skipped, or need to be forced to convert to a certain data type.</p>
+	</li>
+	<li>
+	<p><strong>pairwise_analysis：</strong>Correlation analysis may take a long time. If it is more than you can tolerate, you need to set this parameter to on or off to determine if you need to analyze the data for correlation.</p>
+	</li>
+</ul>
+
+<p style=""text-align:start"><strong>compare()丨Comparison of two data sets</strong></p>
+
+<pre style=""margin-left:0px; margin-right:0px">
+<code><span style=""font-size:10px">my_report = sv.compare([my_dataframe, <span style=""background-color:rgba(0, 0, 0, 0)">&quot;Training Data&quot;</span>], [test_df, <span style=""background-color:rgba(0, 0, 0, 0)">&quot;Test Data&quot;</span>], <span style=""background-color:rgba(0, 0, 0, 0)">&quot;Survived&quot;</span>, feature_config)</span></code></pre>
+
+<p>&nbsp;</p>
+
+<p style=""text-align:start">To compare two datasets, just use this compare() function. It has the same arguments as analyze(), except that a second argument is inserted to override the comparison data frame. It is recommended to use the [dataframe, &quot;name&quot;] parameter format to better distinguish the base data frame from the comparison data frame. (e.g. [my_df, &quot;Train&quot;] is better than my_df)</p>
+
+<p style=""text-align:start"><strong>compare_intra()丨Compare data set columns</strong></p>
+
+<pre style=""margin-left:0px; margin-right:0px">
+<code><span style=""font-size:10px">my_report = sv.compare_intra(my_dataframe, my_dataframe[<span style=""background-color:rgba(0, 0, 0, 0)">&quot;Sex&quot;</span>] == <span style=""background-color:rgba(0, 0, 0, 0)">&quot;male&quot;</span>, [<span style=""background-color:rgba(0, 0, 0, 0)">&quot;Male&quot;</span>, <span style=""background-color:rgba(0, 0, 0, 0)">&quot;Female&quot;</span>], feature_config)</span></code></pre>
+
+<p>&nbsp;</p>
+
+<p style=""text-align:start">Want to analyze the parameters under a certain column in the data set, the use of this function to carry out.<br />
+For example, if you need to compare &quot;male&quot; and &quot;female&quot; under the &quot;gender&quot; column, you can use this function.</p>
+
+<p style=""text-align:start">&nbsp;</p>
+
+<h2><span style=""font-size:18px"><em><strong>3.Adjustment of report layout</strong></em></span></h2>
+
+<p>Once you have created your report object, simply pass it to one of the two show functions.</p>
+
+<p style=""text-align:start">1<strong>. show_html()</strong>:</p>
+
+<pre style=""margin-left:0px; margin-right:0px">
+<code><span style=""font-size:10px">show_html( filepath=<span style=""background-color:rgba(0, 0, 0, 0)">&#39;SWEETVIZ_REPORT.html&#39;</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;open_browser=<span style=""background-color:rgba(0, 0, 0, 0)">True</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout=<span style=""background-color:rgba(0, 0, 0, 0)">&#39;widescreen&#39;</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale=<span style=""background-color:rgba(0, 0, 0, 0)">None</span>)</span></code></pre>
+
+<p>&nbsp;</p>
+
+<p style=""text-align:start"><strong>show_html(...) will create and save the HTML report in the current file path. The following parameters are available.</strong></p>
+
+<ul>
+	<li>
+	<p><strong>layout&nbsp;</strong><span style=""font-family:PingFang SC,Microsoft Yahei,Helvetica Neue,Helvetica,STHeiTi,sans-serif">(</span><strong>布局</strong><span style=""font-family:PingFang SC,Microsoft Yahei,Helvetica Neue,Helvetica,STHeiTi,sans-serif">)：Either &#39;widescreen&#39; or &#39;vertical&#39;. The widescreen layout displays details on the right side of the screen as the mouse moves over each feature. The new (since 2.0) vertical layout is more compact horizontally and expands each detail area on click.</span></p>
+	</li>
+	<li>
+	<p><strong>scale</strong><span style=""font-family:PingFang SC,Microsoft Yahei,Helvetica Neue,Helvetica,STHeiTi,sans-serif">：Use floating point numbers (scale=0.8 or None) to scale the entire report.</span></p>
+	</li>
+	<li>
+	<p><strong>open_browser</strong>：Enable automatic opening of the web browser to display reports. If not needed, you can disable it here.</p>
+	</li>
+</ul>
+
+<p style=""text-align:start"><strong>2.show_notebook():</strong></p>
+
+<pre style=""margin-left:0px; margin-right:0px">
+<code><span style=""font-size:10px">show_notebook( w=<span style=""background-color:rgba(0, 0, 0, 0)">None</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h=<span style=""background-color:rgba(0, 0, 0, 0)">None</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale=<span style=""background-color:rgba(0, 0, 0, 0)">None</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout=<span style=""background-color:rgba(0, 0, 0, 0)">&#39;widescreen&#39;</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filepath=<span style=""background-color:rgba(0, 0, 0, 0)">None</span>)</span></code></pre>
+
+<p>&nbsp;</p>
+
+<p style=""text-align:start">It will embed an IFRAME element to display reports in notebooks (e.g. Jupyter, Google Colab, etc.).</p>
+
+<p style=""text-align:start">Note that since Notebooks are usually a more restricted environment, it may be a good idea to use custom width/height/scale values (w , h , scale).options</p>
+
+<ul>
+	<li>
+	<p><strong>w&nbsp;</strong><span style=""font-family:PingFang SC,Microsoft Yahei,Helvetica Neue,Helvetica,STHeiTi,sans-serif">(width): Sets the width of the report output window. Can be a percentage string ( w=&quot;100%&quot;) or pixels (w=900).</span></p>
+	</li>
+	<li>
+	<p><strong>h&nbsp;</strong>(height): Sets the height of the report output window. This can be a number of pixels (h=700) or stretch the window to the same height as all features ( h=&quot;full&quot;).</p>
+	</li>
+	<li>
+	<p><strong>scale: same as show_html above.</strong></p>
+	</li>
+	<li>
+	<p><strong>layout: the same as show_html above.</strong></p>
+	</li>
+	<li>
+	<p><strong>scale: same as show_html above.</strong></p>
+	</li>
+	<li>
+	<p><strong>filepath: optional output HTML report.</strong></p>
+	</li>
+</ul>
+</div>
+</div>
